@@ -11,7 +11,8 @@ import HeaderActions from 'actions/header.actions';
 import FilterActions from 'actions/filter.actions';
 import Header from 'components/header';
 
-import logo from 'assets/svgs/logo_white.svg';
+import spotlightNFT from 'assets/imgs/spotlight_nft.png';
+import logo from 'assets/svgs/nfthab_white_logo.svg';
 import fantomLogo from 'assets/svgs/fantom_logo_white.svg';
 import card1 from 'assets/svgs/card1.svg';
 import card2 from 'assets/svgs/card2.svg';
@@ -33,7 +34,7 @@ const cards = [
     icon: card2,
     title: 'Super Fast',
     description:
-      'Since Artion runs on the Fantom Opera Network, transactions are usually confirmed within 1-2 seconds.',
+      'Since NFTHab runs on the Fantom Opera Network, transactions are usually confirmed within 1-2 seconds.',
     path: '/',
   },
   {
@@ -47,7 +48,7 @@ const cards = [
     icon: card4,
     title: 'Zero Platform Fees',
     description:
-      'Trade NFTs via auction or direct offer without any fees taken by Artion.',
+      'Trade NFTs via auction or direct offer without any fees taken by NFTHab.',
     path: '/explore',
   },
 ];
@@ -105,9 +106,9 @@ const LandingPage = () => {
             <div
               className={styles.title}
               style={{ color: '#FFF' }}
-            >{`Trade without platform fees on Artion`}</div>
+            >{`Trade without platform fees on NFTHab`}</div>
             <div className={styles.subtitle}>
-              Artion is an NFT marketplace built on Fantom. Create and trade
+              NFTHab is an NFT marketplace built on Fantom. Create and trade
               NFTs instantly with low network costs.
             </div>
             <div className={styles.subtitle}>
@@ -122,55 +123,35 @@ const LandingPage = () => {
           </div>
           <div className={styles.card}>
             <div className={styles.cardMedia}>
-              <ReactPlayer
-                className={styles.player}
-                url={`https://artion.mypinata.cloud/ipfs/QmNjxsiHzRVhbL1WYhxXhJsHCRgCA2bx6LtUJHVmAd3Kir`}
-                controls={true}
-              />
+              <img src={spotlightNFT} />
             </div>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
-              <div className={styles.cardInfo}>
-                <div className={styles.cardCategory}>Shamanka: The Healer</div>
-                <div className={styles.cardName}>{'World of Umans'}</div>
-              </div>
-              <Link
-                to="/explore/0x972dd206a7c2d4ae46db1db700bc79de1bc59960/0"
-                className={styles.exploreButton}
-                style={{ margin: '0 24px' }}
-              >
-                Go to auction
-              </Link>
+            <div className={styles.cardInfo}>
+              <div className={styles.cardCategory}>NFTHab Seed</div>
+              <div className={styles.cardName}>{'SPOTLIGHT NFT'}</div>
             </div>
           </div>
         </div>
-      </div>
-      <div className={styles.about}>
-        <div className={styles.aboutInner}>
-          <div className={styles.aboutTitle}>Why Artion</div>
-          <div className={styles.aboutCards}>
-            {cards.map((card, key) =>
-              renderAboutCard(
-                key,
-                card.icon,
-                card.title,
-                card.description,
-                card.path
-              )
-            )}
-          </div>
-          <div className={styles.aboutTitle}>Browse by category</div>
-          <div className={styles.categories}>
-            {Categories.map(cat =>
-              renderCategoryCard(cat.id, cat.icon, cat.label)
-            )}
-            {renderCategoryCard('all', search, 'Explore All NFTs', true)}
+        <div className={styles.about}>
+          <div className={styles.aboutInner}>
+            <div className={styles.aboutTitle}>Why NFTHab</div>
+            <div className={styles.aboutCards}>
+              {cards.map((card, key) =>
+                renderAboutCard(
+                  key,
+                  card.icon,
+                  card.title,
+                  card.description,
+                  card.path
+                )
+              )}
+            </div>
+            <div className={styles.aboutTitle}>Browse by category</div>
+            <div className={styles.categories}>
+              {Categories.map(cat =>
+                renderCategoryCard(cat.id, cat.icon, cat.label)
+              )}
+              {renderCategoryCard('all', search, 'Explore All NFTs', true)}
+            </div>
           </div>
         </div>
       </div>

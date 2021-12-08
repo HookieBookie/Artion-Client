@@ -24,21 +24,21 @@ export const NETWORK_LABEL = {
 
 export const Contracts = {
   [ChainId.FANTOM]: {
-    auction: '0x951Cc69504d39b3eDb155CA99f555E47E044c2F1',
-    sales: '0xa06aecbb8CD9328667f8E05f288e5b3ac1CFf852',
-    bundleSales: '0x56aD389A02Ea9d63f13106cB0c161342f537a92e',
-    factory: '0xCC7A2eC7A8A0564518fD3D2ca0Df8B2137626144', //FantomNFTFactory
-    privateFactory: '0xa4fDb09e1796730bfBA8a352074F0dd65D400Dd4', //FantomNFTFactoryPrivate
-    artFactory: '0x520DaB621f93F59d3557174280AB1B6d4FB8c956', //FantomArtFactory
-    privateArtFactory: '0x736Eae40AdFf88570b92378c97a0D11b44E1C953', //FantomArtFactoryPrivate
+    auction: '0x0cF57A243345E8421abC37913110203a3c45fe8d',
+    sales: '0xbcd69a84887f68B39c0636FbD05a8c3E33857952',
+    bundleSales: '0xA1Be7bC65Db22eeacD4CCE8E0aB3b1bAC518e334',
+    factory: '0x7ffAa7C0B6A482068993597b9043659A658E5De7', //FantomNFTFactory
+    privateFactory: '0xb7723715cA205ECA949E0e946e6244fF88c2C950', //FantomNFTFactoryPrivate
+    artFactory: '0x71C28F628266e2573952BC6592cbD563FDABeDFd', //FantomArtFactory
+    privateArtFactory: '0xFb0e36e17f65b82Dc4316B2Da4144C55c59b8026', //FantomArtFactoryPrivate
   },
   [ChainId.FANTOM_TESTNET]: {
-    auction: '0xDC8e329b0bA326f7Fcdbb5d42B437FfC7EA7C7a8',
-    sales: '0x35123486C0a742da0aA320d037e5226bA4F9bf21',
-    bundleSales: '0x52352D4a5fB2a79722a875bBdF2a6D00A152a3C5',
-    factory: '0x7C8a9F8D04d9f7601E04B4bd3f594F6aB42b1231', //FantomNFTFactory
-    privateFactory: '0x7d3bb8dD1f3b123C6DFEf882709Fadc007ee4532', //FantomNFTFactoryPrivate
-    artFactory: '0x980A2fAC219CD4e26033E82A44D6798F7488aDb2', //FantomArtFactory
-    privateArtFactory: '0x0106fe87F41BAa91D6fe52c508723e8cf5082c49', //FantomArtFactoryPrivate
+    auction: '0xCf4dc8a2e6900d15fc40561B5C00dDEcFd95F8Fd',
+    sales: '0xA043cDA13E145C393f926F5Fdd59C779adF1F55e',
+    bundleSales: '0xCB44177Cc47d5Cf1aC0d2341eAF7d764f4479Cb3',
+    factory: '0xE8448E00D3E285Fe0EC70D2825AF55A5Fc8039f7', //FantomNFTFactory
+    privateFactory: '0xbA6b0CF52B02f4B0C34D3ACa0dD9f6662521e074', //FantomNFTFactoryPrivate
+    artFactory: '0x7D4A35F4ab8FF5364A20C05Fbb01C5fAB54c5a35', //FantomArtFactory
+    privateArtFactory: '0xCB41a7cbB8C090F12Cc2471ebF4D206Aec2a05bF', //FantomArtFactoryPrivate
   },
 };

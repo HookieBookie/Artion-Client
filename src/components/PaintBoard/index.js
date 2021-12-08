@@ -256,7 +256,7 @@ const PaintBoard = () => {
       const { data: nonce } = await getNonce(account, authToken);
       try {
         const signer = await getSigner();
-        const msg = `Approve Signature on Artion.io with nonce ${nonce}`;
+        const msg = `Approve Signature on NFTHab.io with nonce ${nonce}`;
         signature = await signer.signMessage(msg);
         addr = ethers.utils.verifyMessage(msg, signature);
       } catch (err) {
@@ -290,9 +290,8 @@ const PaintBoard = () => {
         },
       });
 
-      console.log('upload image result is ');
-
       const jsonHash = result.data.jsonHash;
+      console.log('upload image hash is ' + jsonHash);
 
       const contract = await loadContract(
         nft,
@@ -317,7 +316,6 @@ const PaintBoard = () => {
         }
         setCurrentMintingStep(1);
         setLastMintedTnxId(tx.hash);
-
         setCurrentMintingStep(2);
         const confirmedTnx = await tx.wait();
         setCurrentMintingStep(3);
@@ -330,14 +328,14 @@ const PaintBoard = () => {
             ethers.utils.hexDataSlice(confirmedTnx.logs[1].data, 0, 32)
           );
         }
-
+        console.log('Royalty registration');
         const royaltyTx = await registerRoyalty(
           nft,
           mintedTkId.toNumber(),
           isNaN(_royalty) ? 0 : _royalty
         );
         await royaltyTx.wait();
-
+        console.log('Royalty success');
         // save unlockable content
         if (hasUnlockableContent && unlockableContent.length > 0) {
           await addUnlockableContent(

@@ -3,9 +3,7 @@ import { ChainId } from '@sushiswap/sdk';
 import { calculateGasMargin, getHigherGWEI } from 'utils';
 import { Contracts } from 'constants/networks';
 import useContract from 'hooks/useContract';
-
 import { SALES_CONTRACT_ABI } from './abi';
-
 // eslint-disable-next-line no-undef
 const isMainnet = process.env.REACT_APP_ENV === 'MAINNET';
 const CHAIN = isMainnet ? ChainId.FANTOM : ChainId.FANTOM_TESTNET;
@@ -35,15 +33,12 @@ export const useSalesContract = () => {
 
   const buyItemERC20 = async (nftAddress, tokenId, payToken, owner) => {
     const contract = await getSalesContract();
+    const args = [nftAddress, tokenId, payToken, owner];
     const options = {
       gasPrice: getHigherGWEI(),
     };
-
     return await contract['buyItem(address,uint256,address,address)'](
-      nftAddress,
-      tokenId,
-      payToken,
-      owner,
+      ...args,
       options
     );
   };
@@ -54,8 +49,7 @@ export const useSalesContract = () => {
       gasPrice: getHigherGWEI(),
     };
 
-    const tx = await contract.cancelListing(nftAddress, tokenId, options);
-    await tx.wait();
+    return await contract.cancelListing(nftAddress, tokenId, options);
   };
 
   const listItem = async (
@@ -141,11 +135,7 @@ export const useSalesContract = () => {
 
   const acceptOffer = async (nftAddress, tokenId, creator) => {
     const contract = await getSalesContract();
-    const options = {
-      gasPrice: getHigherGWEI(),
-    };
-
-    return await contract.acceptOffer(nftAddress, tokenId, creator, options);
+    return await contract.acceptOffer(nftAddress, tokenId, creator);
   };
 
   const registerRoyalty = async (nftAddress, tokenId, royalty) => {

@@ -276,7 +276,7 @@ const CollectionCreate = ({ isRegister }) => {
 
           try {
             const signer = await getSigner();
-            const msg = `Approve Signature on Artion.io with nonce ${nonce}`;
+            const msg = `Approve Signature on NFTHab.io with nonce ${nonce}`;
 
             signature = await signer.signMessage(msg);
             signatureAddress = ethers.utils.verifyMessage(msg, signature);
@@ -393,7 +393,7 @@ const CollectionCreate = ({ isRegister }) => {
                 try {
                   const signer = await getSigner();
                   signature = await signer.signMessage(
-                    `Approve Signature on Artion.io with nonce ${nonce}`
+                    `Approve Signature on NFTHab.io with nonce ${nonce}`
                   );
                 } catch (err) {
                   toast(
@@ -500,9 +500,9 @@ const CollectionCreate = ({ isRegister }) => {
         <br />
         <div style={{ fontSize: '13px' }}>
           Please submit using the owner address of the collection. If you cannot
-          use the owner address, please email us on contact@fantom.foundation
-          with the information below (and proof of collection ownership, such as
-          from the collection's official email address).
+          use the owner address, please email us on nfthab@protonmail.com with
+          the information below (and proof of collection ownership, such as from
+          the collection's official email address).
         </div>
 
         {!isRegister && (
@@ -647,7 +647,7 @@ const CollectionCreate = ({ isRegister }) => {
             <div className={styles.inputTitle}>
               Royalty *&nbsp;
               <BootstrapTooltip
-                title="Each NFT under this collection exchanged through Artion will have a percentage of sale given to nominated wallet address."
+                title="Each NFT under this collection exchanged through NFTHab will have a percentage of sale given to nominated wallet address."
                 placement="top"
               >
                 <HelpOutlineIcon />

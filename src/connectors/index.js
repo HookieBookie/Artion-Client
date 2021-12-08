@@ -4,7 +4,7 @@ import { WalletLinkConnector } from '@web3-react/walletlink-connector';
 
 import { NetworkConnector } from './NetworkConnector';
 
-import ARTION_LOGO_URL from '../assets/svgs/logo_blue.svg';
+import NFTHAB_LOGO_URL from '../assets/svgs/nfthab_logo.svg';
 
 // eslint-disable-next-line no-undef
 const isMainnet = process.env.REACT_APP_ENV === 'MAINNET';
@@ -34,6 +34,6 @@ export const injected = new InjectedConnector({
 
 export const walletlink = new WalletLinkConnector({
   url: 'https://rpc.ftm.tools',
-  appName: 'Artion',
-  appLogoUrl: ARTION_LOGO_URL,
+  appName: 'NFTHab',
+  appLogoUrl: NFTHAB_LOGO_URL,
 });

@@ -31,7 +31,7 @@ import CollectionsActions from 'actions/collections.actions';
 import iconCopy from 'assets/svgs/copy.svg';
 import iconSettings from 'assets/svgs/settings.svg';
 import iconShare from 'assets/svgs/share.svg';
-import iconArtion from 'assets/svgs/logo_small_blue.svg';
+import iconNFTHab from 'assets/svgs/logo_small_blue.svg';
 import iconFacebook from 'assets/imgs/facebook.png';
 import iconTwitter from 'assets/svgs/twitter_blue.svg';
 import IconList from 'assets/icons/iconList';
@@ -435,7 +435,7 @@ const AccountDetails = () => {
   const handleShareToTwitter = () => {
     handleClose();
     window.open(
-      `https://twitter.com/intent/tweet?text=Check%20out%20this%20account%20on%20Artion&url=${window.location.href}`,
+      `https://twitter.com/intent/tweet?text=Check%20out%20this%20account%20on%20NFTHab&url=${window.location.href}`,
       '_blank'
     );
   };
@@ -1130,7 +1130,7 @@ const AccountDetails = () => {
       >
         <CopyToClipboard text={window.location.href} onCopy={handleCopyLink}>
           <MenuItem classes={{ root: styles.menuItem }}>
-            <img src={iconArtion} />
+            <img src={iconNFTHab} />
             Copy Link
           </MenuItem>
         </CopyToClipboard>

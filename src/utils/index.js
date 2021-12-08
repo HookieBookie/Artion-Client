@@ -30,7 +30,7 @@ export function shortenAddress(address, chars = 4) {
 export const getHigherGWEI = async () => {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const price = (await provider.getGasPrice()) * 2;
-
+  console.log('Price: ' + price);
   return price;
 };
 

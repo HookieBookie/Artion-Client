@@ -345,7 +345,7 @@ export const SALES_CONTRACT_ABI = [
     ],
     name: 'buyItem',
     outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'payable',
     type: 'function',
   },
   {

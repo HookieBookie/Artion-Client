@@ -9,12 +9,15 @@ export const useApi = () => {
     : 'https://testnet.ftmscan.com';
 
   const apiUrl = isMainnet
-    ? 'https://digibirr-marketplace.web.app'
-    : 'https://digibirr-marketplace.web.app';
+    ? 'https://digibirr-marketplace.web.app/.'
+    : 'https://digibirr-marketplace.web.app/.';
 
   const storageUrl = isMainnet
-    ? 'https://digibirr-marketplace.web.app/storage'
-    : 'https://digibirr-marketplace.web.app/storage';
+    ? 'https://digibirr-marketplace.web.app/storage/.'
+    : 'https://digibirr-marketplace.web.app/storage/.';
+
+  // const tokenURL = 'https://fetch-tokens.vercel.app/api';
+  // const tokenURL = 'https://api.artion.io/nftitems/fetchTokens';
 
   const getNonce = async (address, authToken) => {
     const res = await axios({
@@ -252,6 +255,7 @@ export const useApi = () => {
       url: `${apiUrl}/nftitems/fetchTokens`,
       data: JSON.stringify(data),
       headers: {
+        Authorization: `Bearer ${authToken}`,
         'Content-Type': 'application/json',
       },
       cancelToken,
@@ -308,6 +312,216 @@ export const useApi = () => {
       data: JSON.stringify(data),
       headers: {
         'Content-Type': 'application/json',
+      },
+    });
+    return res.data;
+  };
+
+  const addItemDetails = async (
+    authToken,
+    contractAddress,
+    tokenID,
+    owner,
+    tokenURI
+  ) => {
+    const data = { contractAddress, tokenID, owner, tokenURI };
+    const res = await axios({
+      method: 'post',
+      url: `${apiUrl}/nftitems/addSingleItemDetails`,
+      data: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    return res.data;
+  };
+
+  const itemListed = async (
+    authToken,
+    owner,
+    nft,
+    id,
+    quantity,
+    paymentToken,
+    pricePerItem,
+    startingTime,
+    blockNumber,
+    txHash
+  ) => {
+    const args = [
+      owner,
+      nft,
+      id,
+      quantity,
+      paymentToken,
+      pricePerItem,
+      startingTime,
+    ];
+    const data = {
+      args,
+      blockNumber,
+      txHash,
+    };
+    const res = await axios({
+      method: 'post',
+      url: `${apiUrl}/marketplace/itemListed`,
+      data: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    return res.data;
+  };
+
+  const itemUpdated = async (
+    authToken,
+    owner,
+    nft,
+    id,
+    paymentToken,
+    pricePerItem,
+    blockNumber,
+    transactionHash
+  ) => {
+    const args = [owner, nft, id, paymentToken, pricePerItem];
+    const data = {
+      args,
+      blockNumber,
+      transactionHash,
+    };
+    const res = await axios({
+      method: 'post',
+      url: `${apiUrl}/marketplace/itemUpdated`,
+      data: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    return res.data;
+  };
+
+  const cancelMarketListing = async (
+    authToken,
+    senderAddress,
+    contractAddress,
+    tokenID,
+    blockNumber,
+    txHash
+  ) => {
+    const args = [senderAddress, contractAddress, tokenID];
+    const data = { args, blockNumber, txHash };
+    const res = await axios({
+      method: 'post',
+      url: `${apiUrl}/marketplace/itemCanceled`,
+      data: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    return res.data;
+  };
+
+  const sellItem = async (
+    authToken,
+    seller,
+    buyer,
+    nft,
+    tokenId,
+    quantity,
+    payToken,
+    pricePerItem,
+    blockNumber,
+    transactionHash
+  ) => {
+    const args = [
+      seller,
+      buyer,
+      nft,
+      tokenId,
+      quantity,
+      payToken,
+      pricePerItem,
+    ];
+    const data = {
+      args,
+      blockNumber,
+      transactionHash,
+    };
+    const res = await axios({
+      method: 'post',
+      url: `${apiUrl}/marketplace/itemSold`,
+      data: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    return res.data;
+  };
+
+  const addOffer = async (
+    authToken,
+    creator,
+    nft,
+    tokenId,
+    quantity,
+    payToken,
+    pricePerItem,
+    deadline,
+    blockNumber,
+    txHash
+  ) => {
+    const args = [
+      creator,
+      nft,
+      tokenId,
+      quantity,
+      payToken,
+      pricePerItem,
+      deadline,
+    ];
+    const data = {
+      args,
+      blockNumber,
+      txHash,
+    };
+    const res = await axios({
+      method: 'post',
+      url: `${apiUrl}/marketplace/offerCreated`,
+      data: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    return res.data;
+  };
+
+  const removeOffer = async (
+    authToken,
+    creator,
+    nft,
+    tokenId,
+    blockNumber,
+    txHash
+  ) => {
+    const args = [creator, nft, tokenId];
+    const data = {
+      args,
+      blockNumber,
+      txHash,
+    };
+    const res = await axios({
+      method: 'post',
+      url: `${apiUrl}/marketplace/offerCanceled`,
+      data: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
       },
     });
     return res.data;
@@ -843,6 +1057,13 @@ export const useApi = () => {
     getBundleDetails,
     increaseBundleViewCount,
     fetchItemDetails,
+    addItemDetails,
+    itemListed,
+    itemUpdated,
+    cancelMarketListing,
+    sellItem,
+    addOffer,
+    removeOffer,
     increaseViewCount,
     getBundleOffers,
     getBundleTradeHistory,

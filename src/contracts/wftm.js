@@ -6,7 +6,7 @@ import useContract from 'hooks/useContract';
 import { ethers } from 'ethers';
 
 const WFTM_ADDRESS = {
-  [ChainId.FANTOM]: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83',
+  [ChainId.FANTOM]: '0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83',
   [ChainId.FANTOM_TESTNET]: '0xf1277d1Ed8AD466beddF92ef448A132661956621',
 };
 

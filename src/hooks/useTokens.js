@@ -2,6 +2,7 @@ import { ChainId } from '@sushiswap/sdk';
 
 // import iconFTM from 'assets/imgs/ftm.png';
 import iconWFTM from 'assets/imgs/wftm.png';
+import iconDBIRR from 'assets/imgs/dbirr.png';
 import iconUSDT from 'assets/imgs/usdt.png';
 import iconUSDC from 'assets/imgs/usdc.png';
 import iconDAI from 'assets/imgs/dai.png';
@@ -61,6 +62,13 @@ const Tokens = {
       symbol: 'WFTM',
       decimals: 18,
       icon: iconWFTM,
+    },
+    {
+      address: '0x6B9c920C83Fd9de7594B50E81B7CA921e33CCe25',
+      name: 'DigiBirr',
+      symbol: 'DBIRR',
+      decimals: 18,
+      icon: iconDBIRR,
     },
   ],
 };

@@ -2,8 +2,8 @@ import { ChainId } from '@sushiswap/sdk';
 
 export const FantomNFTConstants = {
   ADDRESS: {
-    [ChainId.FANTOM]: '0x4878Be5Aefb2d7Ec4E3f0Cd6aD3EFc79051dC4dD',
-    [ChainId.FANTOM_TESTNET]: '0xe8d29976368Fc2d8699797faA7cD3684dFf41810',
+    [ChainId.FANTOM]: '0xfcea75477ddbd4de8266f46E06F7e0B318369102',
+    [ChainId.FANTOM_TESTNET]: '0xa6C2e61016EDBe9D3be23CF051dafdf5673Af1ab',
   },
   ABI: [
     {

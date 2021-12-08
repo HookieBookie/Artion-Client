@@ -1,11 +1,12 @@
 const FirebaseCredentials = {
-  APIKEY: 'AIzaSyDREDVv7du1dR7IGA3FvklGi1Z-uFxk5tc',
-  AUTHDOMAIN: 'fantomsea-8a097.firebaseapp.com',
-  PROJECTID: 'fantomsea-8a097',
-  STORAGEBUCKET: 'fantomsea-8a097.appspot.com',
-  MEASSAGINGSENDERID: '958318990578',
-  APPID: '1:958318990578:web:45e8bc677d77cd871f2c6b',
-  MEASUREMENTID: 'G-PDWH3TBPZY',
+  apiKey: "AIzaSyBEcTOyNQHxg6zi14QA2unkURmmQti1S-c",
+  authDomain: "digibirr-nft-8a097.firebaseapp.com",
+  databaseURL: "https://digibirr-nft-8a097-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "digibirr-nft-8a097",
+  storageBucket: "digibirr-nft-8a097.appspot.com",
+  messagingSenderId: "404886938456",
+  appId: "1:404886938456:web:5ef64ab9b3b7242ee83b2d",
+  measurementId: "G-TDKF92XPZT"
 };
 
 export default FirebaseCredentials;

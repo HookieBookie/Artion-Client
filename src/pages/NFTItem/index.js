@@ -91,7 +91,7 @@ import mediumIcon from 'assets/svgs/medium.svg';
 import filterIcon from 'assets/svgs/filter.svg';
 import checkIcon from 'assets/svgs/check.svg';
 import shareIcon from 'assets/svgs/share.svg';
-import iconArtion from 'assets/svgs/logo_small_blue.svg';
+import iconNFTHab from 'assets/svgs/nfthab_logo.svg';
 import iconFacebook from 'assets/imgs/facebook.png';
 import iconTwitter from 'assets/svgs/twitter_blue.svg';
 
@@ -481,13 +481,10 @@ const NFTItem = () => {
         const contract = await getERC721Contract(address);
         const tokenURI = await contract.tokenURI(tokenID);
         const realUri = getRandomIPFS(tokenURI);
-
         const { data } = await axios.get(realUri);
-
         if (data.image) {
           data.image = getRandomIPFS(data.image);
         }
-
         setInfo(data);
       } catch {
         history.replace('/404');
@@ -643,7 +640,6 @@ const NFTItem = () => {
       listings.current = listings.current.sort((a, b) =>
         a.price > b.price ? 1 : -1
       );
-
       setListingConfirming(false);
       showToast('success', 'Item listed successfully!');
     }
@@ -1603,12 +1599,15 @@ const NFTItem = () => {
 
   const handleListItem = async (token, _price, quantity) => {
     if (listingItem) return;
-
     try {
       setListingItem(true);
       setListingConfirming(true);
 
       const price = ethers.utils.parseUnits(_price, token.decimals);
+      const startingTime = ethers.BigNumber.from(
+        Math.floor(new Date().getTime() / 1000)
+      );
+      let tx;
       if (bundleID) {
         const addresses = [];
         const tokenIds = [];
@@ -1618,26 +1617,26 @@ const NFTItem = () => {
           tokenIds.push(item.tokenID);
           quantities.push(item.supply);
         });
-        const tx = await listBundle(
+        tx = await listBundle(
           bundleID,
           addresses,
           tokenIds,
           quantities,
           token.address === '' ? ethers.constants.AddressZero : token.address,
           price,
-          ethers.BigNumber.from(Math.floor(new Date().getTime() / 1000))
+          startingTime
         );
         await tx.wait();
 
         showToast('success', 'Bundle listed successfully!');
       } else {
-        const tx = await listItem(
+        tx = await listItem(
           address,
           ethers.BigNumber.from(tokenID),
           ethers.BigNumber.from(quantity),
           token.address === '' ? ethers.constants.AddressZero : token.address,
           price,
-          ethers.BigNumber.from(Math.floor(new Date().getTime() / 1000))
+          startingTime
         );
         await tx.wait();
       }
@@ -1677,7 +1676,7 @@ const NFTItem = () => {
       let addr;
       try {
         const signer = await getSigner();
-        const msg = `Approve Signature on Artion.io with nonce ${nonce}`;
+        const msg = `Approve Signature on NFTHab.io with nonce ${nonce}`;
         signature = await signer.signMessage(msg);
         addr = ethers.utils.verifyMessage(msg, signature);
       } catch {
@@ -1724,7 +1723,6 @@ const NFTItem = () => {
         );
         await tx.wait();
       }
-
       setPriceUpdating(false);
       setSellModalVisible(false);
     } catch (e) {
@@ -1740,12 +1738,15 @@ const NFTItem = () => {
     setCancelingListing(true);
     setCancelListingConfirming(true);
     try {
+      let tx;
       if (bundleID) {
-        await cancelBundleListing(bundleID);
+        tx = await cancelBundleListing(bundleID);
+        await tx.wait();
         bundleListing.current = null;
         showToast('success', 'Bundle unlisted successfully!');
       } else {
-        await cancelListing(address, tokenID);
+        tx = await cancelListing(address, tokenID);
+        await tx.wait();
       }
     } catch (e) {
       setCancelListingConfirming(false);
@@ -1768,8 +1769,7 @@ const NFTItem = () => {
           address,
           ethers.BigNumber.from(tokenID),
           listing.owner,
-          price,
-          account
+          price
         );
         await tx.wait();
       } else {
@@ -1806,11 +1806,11 @@ const NFTItem = () => {
           address,
           ethers.BigNumber.from(tokenID),
           listing.token.address,
-          listing.owner
+          listing.owner,
+          account
         );
         await tx.wait();
       }
-
       setOwner(account);
 
       listings.current = listings.current.filter(
@@ -1861,7 +1861,6 @@ const NFTItem = () => {
           const tx = await erc20.approve(salesContract.address, price);
           await tx.wait();
         }
-
         const tx = await buyBundleERC20(bundleID, token.address);
         await tx.wait();
       }
@@ -1908,7 +1907,6 @@ const NFTItem = () => {
         setOfferConfirming(false);
         return;
       }
-
       if (bundleID) {
         const allowance = await erc20.allowance(
           account,
@@ -1954,7 +1952,7 @@ const NFTItem = () => {
 
         await tx.wait();
       }
-
+      console.log('Offer added to contract');
       setOfferModalVisible(false);
     } catch (e) {
       setOfferConfirming(false);
@@ -2006,7 +2004,6 @@ const NFTItem = () => {
         const tx = await cancelOffer(address, tokenID);
         await tx.wait();
       }
-
       offerCanceledHandler(account, address, ethers.BigNumber.from(tokenID));
     } catch (error) {
       setOfferConfirming(false);
@@ -2346,7 +2343,7 @@ const NFTItem = () => {
   const handleShareToTwitter = () => {
     handleClose();
     window.open(
-      `https://twitter.com/intent/tweet?text=Check%20out%20this%20item%20on%20Artion&url=${window.location.href}`,
+      `https://twitter.com/intent/tweet?text=Check%20out%20this%20item%20on%20NFTHab&url=${window.location.href}`,
       '_blank'
     );
   };
@@ -3708,7 +3705,7 @@ const NFTItem = () => {
       >
         <CopyToClipboard text={window.location.href} onCopy={handleCopyLink}>
           <MenuItem classes={{ root: styles.menuItem }}>
-            <img src={iconArtion} />
+            <img src={iconNFTHab} />
             Copy Link
           </MenuItem>
         </CopyToClipboard>
