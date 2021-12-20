@@ -11,26 +11,27 @@ import { getSigner } from 'contracts';
 import Modal from '../Modal';
 import styles from '../Modal/common.module.scss';
 
-const BanCollectionModal = ({ visible, isBan, onClose }) => {
-  const { getNonce, banCollection, unbanCollection } = useApi();
+const ArtistModal = ({ visible, onClose, isAdding }) => {
+  const { getNonce, addArtist, removeArtist } = useApi();
   const { account } = useWeb3React();
 
   const { authToken } = useSelector(state => state.ConnectWallet);
 
-  const [banning, setBanning] = useState(false);
+  const [adding, setAdding] = useState(false);
+  const [name, setName] = useState('');
   const [address, setAddress] = useState('');
 
   useEffect(() => {
     if (visible) {
-      setBanning(false);
+      setAdding(false);
     }
   }, [visible]);
 
-  const handleBanItem = async () => {
-    if (banning) return;
+  const handleAddArtist = async () => {
+    if (adding) return;
 
     try {
-      setBanning(true);
+      setAdding(true);
 
       const { data: nonce } = await getNonce(account, authToken);
 
@@ -44,51 +45,67 @@ const BanCollectionModal = ({ visible, isBan, onClose }) => {
       } catch (err) {
         toast(
           'error',
-          'You need to sign the message to be able to ban/unban collection.'
+          `You need to sign the message to be able to ${
+            isAdding ? 'add' : 'remove'
+          } a new artist.`
         );
-        setBanning(false);
+        setAdding(false);
         return;
       }
 
-      await (isBan ? banCollection : unbanCollection)(
-        address,
-        authToken,
-        signature,
-        addr
-      );
-      toast('success', 'Success!');
+      if (isAdding) {
+        await addArtist(name, address, authToken, signature, addr);
+        toast('success', 'Added new artist!');
+      } else {
+        await removeArtist(address, authToken, signature, addr);
+        toast('success', 'Removed artist!');
+      }
     } catch (e) {
       console.log(e);
     }
-    setBanning(false);
+    setAdding(false);
   };
 
   return (
     <Modal
       visible={visible}
-      title={isBan ? 'Ban Collection' : 'Unban Collection'}
+      title={isAdding ? 'Add Artist' : 'Remove Artist'}
       onClose={onClose}
-      submitDisabled={banning}
+      submitDisabled={adding}
       submitLabel={
-        banning ? (
+        adding ? (
           <ClipLoader color="#FFF" size={16} />
-        ) : isBan ? (
-          'Ban'
+        ) : isAdding ? (
+          'Add'
         ) : (
-          'Unban'
+          'Remove'
         )
       }
-      onSubmit={!banning ? () => handleBanItem() : null}
+      onSubmit={!adding ? () => handleAddArtist() : null}
     >
+      {isAdding && (
+        <div className={styles.formGroup}>
+          <div className={styles.formLabel}>Name</div>
+          <div className={styles.formInputCont}>
+            <input
+              className={styles.formInput}
+              placeholder="Name"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              disabled={adding}
+            />
+          </div>
+        </div>
+      )}
       <div className={styles.formGroup}>
-        <div className={styles.formLabel}>Collection Address</div>
+        <div className={styles.formLabel}>Address</div>
         <div className={styles.formInputCont}>
           <input
             className={styles.formInput}
             placeholder="0x0000"
             value={address}
             onChange={e => setAddress(e.target.value)}
-            disabled={banning}
+            disabled={adding}
           />
         </div>
       </div>
@@ -96,4 +113,4 @@ const BanCollectionModal = ({ visible, isBan, onClose }) => {
   );
 };
 
-export default BanCollectionModal;
+export default ArtistModal;

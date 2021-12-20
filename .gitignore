@@ -25,3 +25,9 @@ yarn-error.log*
 *.zip
 *.zip
 package-lock.json
+yarn.lock
+.firebase/hosting.YnVpbGQ.cache
+*.cache
+.firebase/hosting.YnVpbGQ.cache
+.prettierignore
+src/api/indexOG.js

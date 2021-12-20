@@ -214,7 +214,7 @@
   color: #1969FF;
   margin-right: 110px;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: "";
   white-space: nowrap;
 }
 
@@ -226,7 +226,7 @@
   margin-top: 16px;
   margin-right: 110px;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: "";
   white-space: nowrap;
 }
 
@@ -236,10 +236,10 @@
   line-height: 20px;
   color: rgba(0, 0, 0, .6);
   margin-top: 10px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow: visible;
+  text-overflow: "";
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: none;
   -webkit-box-orient: vertical;
 }
 
@@ -389,7 +389,7 @@
 .bundleItemName {
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: "";
 }
 
 .bundleItemSupply {

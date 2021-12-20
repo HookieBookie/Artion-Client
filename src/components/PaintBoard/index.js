@@ -256,7 +256,7 @@ const PaintBoard = () => {
       const { data: nonce } = await getNonce(account, authToken);
       try {
         const signer = await getSigner();
-        const msg = `Approve Signature on NFTHab.io with nonce ${nonce}`;
+        const msg = `Approve Signature on NFTHab.com with nonce ${nonce}`;
         signature = await signer.signMessage(msg);
         addr = ethers.utils.verifyMessage(msg, signature);
       } catch (err) {
@@ -480,14 +480,14 @@ const PaintBoard = () => {
                 <p className={styles.formLabel}>Description</p>
                 <textarea
                   className={cx(styles.formInput, styles.longInput)}
-                  maxLength={120}
+                  maxLength={800}
                   placeholder="Description"
                   value={description}
                   onChange={e => setDescription(e.target.value)}
                   disabled={isMinting}
                 />
                 <div className={styles.lengthIndicator}>
-                  {description.length}/120
+                  {description.length}/800
                 </div>
               </div>
             </div>

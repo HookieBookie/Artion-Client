@@ -17,6 +17,7 @@ import { NETWORK_LABEL } from 'constants/networks';
 import { ADMIN_ADDRESS } from 'constants/index';
 import WFTMModal from 'components/WFTMModal';
 import ModModal from 'components/ModModal';
+import ArtistModal from 'components/ArtistModal';
 import BanCollectionModal from 'components/BanCollectionModal';
 import BanItemModal from 'components/BanItemModal';
 import BanUserModal from 'components/BanUserModal';
@@ -24,10 +25,11 @@ import BoostCollectionModal from 'components/BoostCollectionModal';
 import ConnectWalletModal from 'components/ConnectWalletModal';
 import Identicon from 'components/Identicon';
 
-import logoSmallBlue from 'assets/svgs/nfthab_logo.svg';
+import logoSmallBlue from 'assets/svgs/nfthab_white_logo.svg';
 import iconUser from 'assets/svgs/user.svg';
 import iconNotification from 'assets/svgs/notification.svg';
-// import iconAdd from 'assets/svgs/add.svg';
+import iconNFT from 'assets/svgs/nft.svg';
+import iconAdd from 'assets/svgs/add.svg';
 import iconEdit from 'assets/svgs/edit.svg';
 import iconSwap from 'assets/svgs/swap.svg';
 
@@ -44,12 +46,13 @@ const Header = ({ border }) => {
     getAuthToken,
     getAccountDetails,
     getIsModerator,
+    getIsArtist,
   } = useApi();
   const { account, chainId, deactivate } = useWeb3React();
 
   const { user } = useSelector(state => state.Auth);
   let isSearchbarShown = useSelector(state => state.HeaderOptions.isShown);
-  const { isModerator } = useSelector(state => state.ConnectWallet);
+  const { isModerator, isArtist } = useSelector(state => state.ConnectWallet);
   const { wftmModalVisible, connectWalletModalVisible } = useSelector(
     state => state.Modal
   );
@@ -59,6 +62,7 @@ const Header = ({ border }) => {
   const [searchBarActive, setSearchBarActive] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const [modModalVisible, setModModalVisible] = useState(false);
+  const [artistModalVisible, setArtistModalVisible] = useState(false);
   const [isBan, setIsBan] = useState(false);
   const [banCollectionModalVisible, setBanCollectionModalVisible] = useState(
     false
@@ -87,8 +91,11 @@ const Header = ({ border }) => {
       setLoading(true);
       const token = await getAuthToken(account);
       const isModerator = await getIsModerator(account);
+      const isArtist = await getIsArtist(account);
 
-      dispatch(WalletConnectActions.connectWallet(token, isModerator));
+      dispatch(
+        WalletConnectActions.connectWallet(token, isModerator, isArtist)
+      );
       dispatch(AuthActions.fetchStart());
       try {
         const { data } = await getAccountDetails(token);
@@ -229,10 +236,15 @@ const Header = ({ border }) => {
     handleMenuClose();
   };
 
-  // const handleCreateCollection = () => {
-  //   history.push('/collection/create');
-  //   handleMenuClose();
-  // };
+  const handleCreate = () => {
+    history.push('/create');
+    handleMenuClose();
+  };
+
+  const handleCreateCollection = () => {
+    history.push('/collection/create');
+    handleMenuClose();
+  };
 
   const handleRegisterCollection = () => {
     history.push('/collection/register');
@@ -250,9 +262,21 @@ const Header = ({ border }) => {
     handleMenuClose();
   };
 
+  const addArtist = () => {
+    setIsAdding(true);
+    setArtistModalVisible(true);
+    handleMenuClose();
+  };
+
   const removeMod = () => {
     setIsAdding(false);
     setModModalVisible(true);
+    handleMenuClose();
+  };
+
+  const removeArtist = () => {
+    setIsAdding(false);
+    setArtistModalVisible(true);
     handleMenuClose();
   };
 
@@ -319,14 +343,6 @@ const Header = ({ border }) => {
         <img src={iconNotification} className={styles.menuIcon} />
         Notification Settings
       </div>
-      {/* <div className={styles.menuItem} onClick={handleCreateCollection}>
-        <img src={iconAdd} className={styles.menuIcon} />
-        Create New Collection
-      </div> */}
-      <div className={styles.menuItem} onClick={handleRegisterCollection}>
-        <img src={iconEdit} className={styles.menuIcon} />
-        Register Existing Collection
-      </div>
       <div className={styles.menuItem} onClick={openWrapStation}>
         <img src={iconSwap} className={styles.menuIcon} />
         FTM / WFTM Station
@@ -338,51 +354,101 @@ const Header = ({ border }) => {
             <div key={0} className={styles.menuItem} onClick={addMod}>
               Add Mod
             </div>,
-            <div key={1} className={styles.menuItem} onClick={removeMod}>
+            <div key={1} className={styles.menuItem} onClick={addArtist}>
+              Add Artist
+            </div>,
+            <div key={2} className={styles.menuItem} onClick={removeMod}>
               Remove Mod
             </div>,
+            <div key={3} className={styles.menuItem} onClick={removeArtist}>
+              Remove Artist
+            </div>,
             <div
-              key={2}
+              key={4}
               className={styles.menuItem}
               onClick={reviewCollections}
             >
               Review Collections
             </div>,
-            <div key={3} className={styles.menuItem} onClick={banCollection}>
+            <div key={5} className={styles.menuItem} onClick={banCollection}>
               Ban Collection
             </div>,
-            <div key={4} className={styles.menuItem} onClick={unbanCollection}>
+            <div key={6} className={styles.menuItem} onClick={unbanCollection}>
               Unban Collection
             </div>,
-            <div key={5} className={styles.menuItem} onClick={banItems}>
+            <div key={7} className={styles.menuItem} onClick={banItems}>
               Ban Items
             </div>,
-            <div key={6} className={styles.menuItem} onClick={banUser}>
+            <div key={8} className={styles.menuItem} onClick={banUser}>
               Ban a user
             </div>,
-            <div key={6} className={styles.menuItem} onClick={unbanUser}>
+            <div key={9} className={styles.menuItem} onClick={unbanUser}>
               Unban a user
             </div>,
-            <div key={7} className={styles.menuItem} onClick={boostCollection}>
+            <div key={10} className={styles.menuItem} onClick={boostCollection}>
               Boost Collection
             </div>,
-            <div key={8} className={styles.menuSeparator} />,
+            <div key={11} className={styles.menuItem} onClick={handleCreate}>
+              <img src={iconNFT} className={styles.menuIcon} />
+              Create New NFT
+            </div>,
+            <div
+              key={12}
+              className={styles.menuItem}
+              onClick={handleCreateCollection}
+            >
+              <img src={iconAdd} className={styles.menuIcon} />
+              Create New Collection
+            </div>,
+            <div
+              key={13}
+              className={styles.menuItem}
+              onClick={handleRegisterCollection}
+            >
+              <img src={iconEdit} className={styles.menuIcon} />
+              Register Existing Collection
+            </div>,
+            <div key={14} className={styles.menuSeparator} />,
           ]
         : isModerator
         ? [
-            <div key={1} className={styles.menuItem} onClick={banCollection}>
+            <div key={15} className={styles.menuItem} onClick={banCollection}>
               Ban Collection
             </div>,
-            <div key={2} className={styles.menuItem} onClick={banItems}>
+            <div key={16} className={styles.menuItem} onClick={banItems}>
               Ban Items
             </div>,
-            <div key={3} className={styles.menuItem} onClick={banUser}>
+            <div key={17} className={styles.menuItem} onClick={banUser}>
               Ban a user
             </div>,
-            <div key={6} className={styles.menuItem} onClick={unbanUser}>
+            <div key={18} className={styles.menuItem} onClick={unbanUser}>
               Unban a user
             </div>,
-            <div key={4} className={styles.menuSeparator} />,
+            <div key={19} className={styles.menuSeparator} />,
+          ]
+        : isArtist
+        ? [
+            <div key={20} className={styles.menuItem} onClick={handleCreate}>
+              <img src={iconNFT} className={styles.menuIcon} />
+              Create New NFT
+            </div>,
+            <div
+              key={21}
+              className={styles.menuItem}
+              onClick={handleCreateCollection}
+            >
+              <img src={iconAdd} className={styles.menuIcon} />
+              Create New Collection
+            </div>,
+            <div
+              key={22}
+              className={styles.menuItem}
+              onClick={handleRegisterCollection}
+            >
+              <img src={iconEdit} className={styles.menuIcon} />
+              Register Existing Collection
+            </div>,
+            <div key={22} className={styles.menuSeparator} />,
           ]
         : null}
       <div className={styles.signOut} onClick={handleSignOut}>
@@ -530,42 +596,20 @@ const Header = ({ border }) => {
         <Link to="/" className={styles.logo}>
           <img src={logoSmallBlue} alt="logo" />
         </Link>
-        {isSearchbarShown && renderSearchBox()}
         <div className={styles.secondmenu}>
-          <NavLink
-            to="/explore"
-            className={cx(styles.menuLink, styles.link)}
-            activeClassName={styles.active}
-          >
-            Explore
-          </NavLink>
-          <NavLink
-            to="/create"
-            className={cx(styles.menuLink, styles.link)}
-            activeClassName={styles.active}
-          >
-            Create
-          </NavLink>
+          {!isSearchbarShown && (
+            <NavLink
+              to="/explore"
+              className={cx(styles.menuLink, styles.link)}
+              activeClassName={styles.active}
+            >
+              Explore
+            </NavLink>
+          )}
+          {isSearchbarShown && renderSearchBox()}
         </div>
       </div>
       <div className={styles.menu}>
-        {isSearchbarShown && renderSearchBox()}
-        <NavLink
-          to="/explore"
-          className={cx(styles.menuLink, styles.link)}
-          activeClassName={styles.active}
-          style={{ color: '#fff' }}
-        >
-          Explore
-        </NavLink>
-        <NavLink
-          to="/create"
-          className={cx(styles.menuLink, styles.link)}
-          activeClassName={styles.active}
-          style={{ color: '#fff' }}
-        >
-          Create
-        </NavLink>
         {account ? (
           <div
             className={cx(styles.account, styles.menuLink)}
@@ -622,6 +666,11 @@ const Header = ({ border }) => {
         isAdding={isAdding}
         visible={modModalVisible}
         onClose={() => setModModalVisible(false)}
+      />
+      <ArtistModal
+        isAdding={isAdding}
+        visible={artistModalVisible}
+        onClose={() => setArtistModalVisible(false)}
       />
       <BanCollectionModal
         visible={banCollectionModalVisible}

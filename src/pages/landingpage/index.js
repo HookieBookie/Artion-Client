@@ -4,15 +4,12 @@ import { NavLink, useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import cx from 'classnames';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ReactPlayer from 'react-player';
 
 import { Categories } from 'constants/filter.constants';
 import HeaderActions from 'actions/header.actions';
 import FilterActions from 'actions/filter.actions';
 import Header from 'components/header';
 
-import spotlightNFT from 'assets/imgs/spotlight_nft.png';
-import logo from 'assets/svgs/nfthab_white_logo.svg';
 import fantomLogo from 'assets/svgs/fantom_logo_white.svg';
 import card1 from 'assets/svgs/card1.svg';
 import card2 from 'assets/svgs/card2.svg';
@@ -46,9 +43,9 @@ const cards = [
   },
   {
     icon: card4,
-    title: 'Zero Platform Fees',
+    title: 'Low Platform Fees',
     description:
-      'Trade NFTs via auction or direct offer without any fees taken by NFTHab.',
+      'Trade NFTs via auction or direct offers with NFTHab taking only 2.5% of each sale as a fee.',
     path: '/explore',
   },
 ];
@@ -106,10 +103,10 @@ const LandingPage = () => {
             <div
               className={styles.title}
               style={{ color: '#FFF' }}
-            >{`Trade without platform fees on NFTHab`}</div>
+            >{`Trade EXCLUSIVE NFTs only available on NFTHab`}</div>
             <div className={styles.subtitle}>
-              NFTHab is an NFT marketplace built on Fantom. Create and trade
-              NFTs instantly with low network costs.
+              NFTHab is a marketplace built on Fantom Opera. Trade the freshest
+              NFTs by featured artists instantly with low network fees.
             </div>
             <div className={styles.subtitle}>
               <strong>
@@ -123,10 +120,19 @@ const LandingPage = () => {
           </div>
           <div className={styles.card}>
             <div className={styles.cardMedia}>
-              <img src={spotlightNFT} />
+              <img
+                src={
+                  'https://gateway.pinata.cloud/ipfs/QmaSR3M1YjLjaBrY3kn7dCVMeYbyNYjtuYivivxrAv2Pn8'
+                }
+              />
             </div>
             <div className={styles.cardInfo}>
-              <div className={styles.cardCategory}>NFTHab Seed</div>
+              <Link
+                to="/explore/0xfcea75477ddbd4de8266f46e06f7e0b318369102/3"
+                className={styles.cardCategory}
+              >
+                Ethiopia
+              </Link>
               <div className={styles.cardName}>{'SPOTLIGHT NFT'}</div>
             </div>
           </div>
@@ -156,12 +162,11 @@ const LandingPage = () => {
         </div>
       </div>
       <div className={styles.footer}>
-        <img src={logo} alt="logo" className={styles.logo} />
         <a
           style={{ textDecoration: 'none', color: '#FFFFFF' }}
           target="_blank"
           rel="noopener noreferrer"
-          href="https://app.termly.io/document/privacy-policy/7db4b9fc-aa5d-4f80-bfa1-27120ff982ba"
+          href="https://www.privacypolicies.com/live/d391c019-a441-4bcf-bd14-0ee67c94d8ca"
         >
           Privacy Policy
         </a>
@@ -169,7 +174,7 @@ const LandingPage = () => {
           style={{ textDecoration: 'none', color: '#FFFFFF' }}
           target="_blank"
           rel="noopener noreferrer"
-          href="https://app.termly.io/document/cookie-policy/c79f1a78-08a2-4da2-85f0-846a461cde81"
+          href="https://www.privacypolicies.com/live/08a2cde6-e38f-4237-8b8a-518741ea8f2e"
         >
           Cookie Policy
         </a>
@@ -177,10 +182,12 @@ const LandingPage = () => {
           style={{ textDecoration: 'none', color: '#FFFFFF' }}
           target="_blank"
           rel="noopener noreferrer"
-          href="https://app.termly.io/document/terms-of-use-for-online-marketplace/1f69b33f-65ba-40d9-bf63-b28e357f7c34"
+          href="/tos"
         >
           Terms of Service
         </a>
+      </div>
+      <div className={styles.ftmfooter}>
         <a
           href="https://fantom.foundation/"
           target="_blank"

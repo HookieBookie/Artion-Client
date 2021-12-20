@@ -5,17 +5,18 @@ const WalletConnectActions = {
   disconnectWallet,
 };
 
-function connectWallet(authToken, isModerator) {
+function connectWallet(authToken, isModerator, isArtist) {
   return dispatch => {
-    dispatch(_connectWallet(authToken, isModerator));
+    dispatch(_connectWallet(authToken, isModerator, isArtist));
   };
 }
 
-const _connectWallet = (authToken, isModerator) => {
+const _connectWallet = (authToken, isModerator, isArtist) => {
   return {
     type: WalletConnectConstants.WALLETCONNECTED,
     token: authToken,
     isModerator,
+    isArtist,
   };
 };
 

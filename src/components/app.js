@@ -24,6 +24,7 @@ import NFTItem from '../pages/NFTItem';
 import CollectionCreate from '../pages/Collection/Create';
 import CollectionReview from '../pages/Collection/Review';
 import NotificationSetting from '../pages/NotificationSetting';
+import ToSPage from '../pages/ToS';
 import PriceActions from 'actions/price.actions';
 
 const App = () => {
@@ -100,10 +101,11 @@ const App = () => {
           <ProtectedRoute exact path="/create" component={PaintBoard} />
           {/* <Route path="/bundle/:bundleID" component={NFTItem} /> */}
           <Route path="/account/:uid" component={AccountDetails} />
-          {/* <ProtectedRoute
+          <Route path="/tos" component={ToSPage} />
+          <ProtectedRoute
             path="/collection/create"
             component={() => <CollectionCreate isRegister={false} />}
-          /> */}
+          />
           <ProtectedRoute
             path="/collection/register"
             component={() => <CollectionCreate isRegister />}

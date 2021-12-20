@@ -202,7 +202,7 @@ const NotificationSetting = () => {
       try {
         const { data: nonce } = await getNonce(account, authToken);
         const signer = await getSigner();
-        const msg = `Approve Signature on NFTHab.io with nonce ${nonce}`;
+        const msg = `Approve Signature on NFTHab.com with nonce ${nonce}`;
         signature = await signer.signMessage(msg);
         addr = ethers.utils.verifyMessage(msg, signature);
       } catch (err) {

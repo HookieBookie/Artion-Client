@@ -10,11 +10,11 @@ export const useApi = () => {
 
   const apiUrl = isMainnet
     ? 'https://digibirr-marketplace.web.app'
-    : 'https://digibirr-marketplace.web.app';
+    : 'http://localhost:8080/.';
 
   const storageUrl = isMainnet
     ? 'https://digibirr-marketplace.web.app/storage'
-    : 'https://digibirr-marketplace.web.app/storage';
+    : 'http://localhost:8080/storage/.';
 
   const getNonce = async (address, authToken) => {
     const res = await axios({
@@ -45,6 +45,17 @@ export const useApi = () => {
     const { data } = await axios({
       method: 'get',
       url: `${apiUrl}/mod/isModerator/${address}`,
+    });
+    if (data.status == 'success') {
+      return data.data;
+    }
+    return false;
+  };
+
+  const getIsArtist = async address => {
+    const { data } = await axios({
+      method: 'get',
+      url: `${apiUrl}/artist/isArtist/${address}`,
     });
     if (data.status == 'success') {
       return data.data;
@@ -233,10 +244,7 @@ export const useApi = () => {
     address = null,
     cancelToken
   ) => {
-    const data = { from, count, type };
-    if (collections.length > 0) {
-      data.collectionAddresses = collections;
-    }
+    const data = { from, count, type, collections };
     if (category !== null) {
       data.category = category;
     }
@@ -409,11 +417,50 @@ export const useApi = () => {
     return res.data;
   };
 
+  const addArtist = async (
+    name,
+    address,
+    authToken,
+    signature,
+    signatureAddress
+  ) => {
+    const data = { name, address, signature, signatureAddress };
+    const res = await axios({
+      method: 'post',
+      url: `${apiUrl}/artist/add`,
+      data: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    return res.data;
+  };
+
   const removeMod = async (address, authToken, signature, signatureAddress) => {
     const data = { address, signature, signatureAddress };
     const res = await axios({
       method: 'post',
       url: `${apiUrl}/mod/remove`,
+      data: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    return res.data;
+  };
+
+  const removeArtist = async (
+    address,
+    authToken,
+    signature,
+    signatureAddress
+  ) => {
+    const data = { address, signature, signatureAddress };
+    const res = await axios({
+      method: 'post',
+      url: `${apiUrl}/artist/remove`,
       data: JSON.stringify(data),
       headers: {
         'Content-Type': 'application/json',
@@ -825,6 +872,7 @@ export const useApi = () => {
     getNonce,
     getAuthToken,
     getIsModerator,
+    getIsArtist,
     getAccountDetails,
     getUserAccountDetails,
     getUserFigures,
@@ -851,7 +899,9 @@ export const useApi = () => {
     getActivityFromOthers,
     getMyOffers,
     addMod,
+    addArtist,
     removeMod,
+    removeArtist,
     banCollection,
     unbanCollection,
     banItems,

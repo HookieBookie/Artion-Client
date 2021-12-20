@@ -24,6 +24,7 @@ import BootstrapTooltip from 'components/BootstrapTooltip';
 import PriceInput from 'components/PriceInput';
 import toast from 'utils/toast';
 import { useApi } from 'api';
+import { ADMIN_ADDRESS } from 'constants/index';
 import { useFactoryContract, getSigner } from 'contracts';
 
 import webIcon from 'assets/svgs/web.svg';
@@ -65,7 +66,7 @@ const CollectionCreate = ({ isRegister }) => {
 
   const inputRef = useRef(null);
 
-  const { authToken } = useSelector(state => state.ConnectWallet);
+  const { authToken, isArtist } = useSelector(state => state.ConnectWallet);
 
   const [deploying, setDeploying] = useState(false);
   const [creating, setCreating] = useState(false);
@@ -101,26 +102,32 @@ const CollectionCreate = ({ isRegister }) => {
   }, []);
 
   useEffect(() => {
-    setLogo(null);
-    setAnchorEl(null);
-    setSelected([]);
-    setName('');
-    setNameError(null);
-    setSymbol('');
-    setSymbolError(null);
-    setDescription('');
-    setDescriptionError(null);
-    setEmail('');
-    setEmailError(null);
-    setAddress('');
-    setAddressError(null);
-    setSiteUrl('');
-    setDiscord('');
-    setTwitterHandle('');
-    setInstagramHandle('');
-    setMediumHandle('');
-    setTelegram('');
-  }, [isRegister]);
+    if (account && authToken) {
+      if (isArtist || account == ADMIN_ADDRESS) {
+        setLogo(null);
+        setAnchorEl(null);
+        setSelected([]);
+        setName('');
+        setNameError(null);
+        setSymbol('');
+        setSymbolError(null);
+        setDescription('');
+        setDescriptionError(null);
+        setEmail('');
+        setEmailError(null);
+        setAddress('');
+        setAddressError(null);
+        setSiteUrl('');
+        setDiscord('');
+        setTwitterHandle('');
+        setInstagramHandle('');
+        setMediumHandle('');
+        setTelegram('');
+      } else {
+        history.replace('/');
+      }
+    }
+  }, [isRegister, account, authToken, isArtist]);
 
   const options = Categories.filter(cat => selected.indexOf(cat.id) === -1);
   const selectedCategories = Categories.filter(
@@ -276,7 +283,7 @@ const CollectionCreate = ({ isRegister }) => {
 
           try {
             const signer = await getSigner();
-            const msg = `Approve Signature on NFTHab.io with nonce ${nonce}`;
+            const msg = `Approve Signature on NFTHab.com with nonce ${nonce}`;
 
             signature = await signer.signMessage(msg);
             signatureAddress = ethers.utils.verifyMessage(msg, signature);
@@ -364,7 +371,7 @@ const CollectionCreate = ({ isRegister }) => {
           : await getArtFactoryContract(),
         name,
         symbol,
-        ethers.utils.parseEther('100'),
+        ethers.utils.parseEther('0'),
         account
       );
       const res = await tx.wait();
@@ -393,7 +400,7 @@ const CollectionCreate = ({ isRegister }) => {
                 try {
                   const signer = await getSigner();
                   signature = await signer.signMessage(
-                    `Approve Signature on NFTHab.io with nonce ${nonce}`
+                    `Approve Signature on NFTHab.com with nonce ${nonce}`
                   );
                 } catch (err) {
                   toast(
@@ -519,7 +526,7 @@ const CollectionCreate = ({ isRegister }) => {
                 }}
                 value="false"
                 control={<CustomRadio color="primary" />}
-                label="Allow others mint NFTs under my collection"
+                label="Allow others to mint NFTs in this collection"
               />
               <FormControlLabel
                 classes={{
@@ -528,7 +535,7 @@ const CollectionCreate = ({ isRegister }) => {
                 }}
                 value="true"
                 control={<CustomRadio color="primary" />}
-                label="Only I can mint NFTs under my collection"
+                label="Only I can mint NFTs in this collection"
               />
             </RadioGroup>
           </div>
@@ -727,7 +734,7 @@ const CollectionCreate = ({ isRegister }) => {
         <div className={styles.inputGroup}>
           <div className={styles.inputTitle}>Category</div>
           <div className={styles.inputSubTitle}>
-            Adding a category will help make your item discoverable on Fantom.
+            Adding a category will help make your items discoverable on NFTHab.
           </div>
           <div className={styles.inputSubTitle}>
             For more information, read{' '}
@@ -915,7 +922,8 @@ const CollectionCreate = ({ isRegister }) => {
         {!isRegister && (
           <div className={styles.fee}>
             <InfoIcon />
-            &nbsp;100 FTMs are charged to create a new collection.
+            Registration only costs gas. By submitting your application you
+            agree that all sales on NFTHab carry a 2.5% transaction fee.
           </div>
         )}
       </div>
