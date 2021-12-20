@@ -19,4 +19,4 @@ As of our launch in December 2021, NFTHab has:
 * Implemented in-house Fantom wrapping
 * Supports payment in several Fantom stablecoins ([wFTM](https://ftmscan.com/token/0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83), [fUSDT](https://ftmscan.com/token/0x049d68029688eabf473097a2fc38ef61633a3c7a), [USDC](https://ftmscan.com/token/0x04068da6c83afcfa0e13ba15a6696662335d5b75), [DAI](https://ftmscan.com/token/0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e))
 
-View our full roadmap here
+View our full [roadmap here](introduction/road-map.md)
