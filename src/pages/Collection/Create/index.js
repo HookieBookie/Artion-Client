@@ -124,8 +124,10 @@ const CollectionCreate = ({ isRegister }) => {
         setMediumHandle('');
         setTelegram('');
       } else {
-        history.replace('/');
+        history.replace('/404');
       }
+    } else {
+      history.replace('/404');
     }
   }, [isRegister, account, authToken, isArtist]);
 

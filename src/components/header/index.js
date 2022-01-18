@@ -236,6 +236,11 @@ const Header = ({ border }) => {
     handleMenuClose();
   };
 
+  const handleMintPreset = () => {
+    history.push('/mint');
+    handleMenuClose();
+  };
+
   const handleCreate = () => {
     history.push('/create');
     handleMenuClose();
@@ -346,6 +351,10 @@ const Header = ({ border }) => {
       <div className={styles.menuItem} onClick={openWrapStation}>
         <img src={iconSwap} className={styles.menuIcon} />
         FTM / WFTM Station
+      </div>
+      <div className={styles.menuItem} onClick={handleMintPreset}>
+        <img src={iconNFT} className={styles.menuIcon} />
+        Mint New NFT
       </div>
 
       <div className={styles.menuSeparator} />
@@ -605,6 +614,15 @@ const Header = ({ border }) => {
             >
               Explore
             </NavLink>
+          )}
+          {!isSearchbarShown && (
+            <a
+              href="https://hookie-bookie.gitbook.io/nfthab"
+              className={cx(styles.menuLink, styles.link)}
+              activeClassName={styles.active}
+            >
+              Docs
+            </a>
           )}
           {isSearchbarShown && renderSearchBox()}
         </div>

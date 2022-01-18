@@ -20,6 +20,7 @@ import PaintBoard from './PaintBoard';
 import LandingPage from '../pages/landingpage';
 import ExplorePage from '../pages/explorepage';
 import AccountDetails from '../pages/AccountDetails';
+import MintNFT from './MintNFT';
 import NFTItem from '../pages/NFTItem';
 import CollectionCreate from '../pages/Collection/Create';
 import CollectionReview from '../pages/Collection/Review';
@@ -99,6 +100,7 @@ const App = () => {
           <Route exact path="/explore" component={ExplorePage} />
           <Route path="/explore/:addr/:id" component={NFTItem} />
           <ProtectedRoute exact path="/create" component={PaintBoard} />
+          <Route exact path="/mint" component={MintNFT} />
           {/* <Route path="/bundle/:bundleID" component={NFTItem} /> */}
           <Route path="/account/:uid" component={AccountDetails} />
           <Route path="/tos" component={ToSPage} />

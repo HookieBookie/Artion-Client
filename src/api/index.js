@@ -233,6 +233,18 @@ export const useApi = () => {
     return res.data;
   };
 
+  const fetchPresetCollections = async authToken => {
+    const res = await axios({
+      method: 'post',
+      url: `${apiUrl}/collection/getPresetCollections`,
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+
+    return res.data;
+  };
+
   const fetchTokens = async (
     from,
     count,
@@ -886,6 +898,7 @@ export const useApi = () => {
     approveCollection,
     rejectCollection,
     fetchMintableCollections,
+    fetchPresetCollections,
     fetchTokens,
     getItemsLiked,
     getBundleDetails,

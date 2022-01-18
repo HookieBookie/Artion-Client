@@ -159,6 +159,14 @@
   }
 }
 
+.ownerName,
+.owner a,
+.from a,
+.to a {
+  text-decoration: none;
+  color: #2479FA;
+}
+
 .name {
   flex: 1;
   font-weight: 700;

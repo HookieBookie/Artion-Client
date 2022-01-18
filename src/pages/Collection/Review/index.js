@@ -22,7 +22,7 @@ import nftIcon from 'assets/svgs/nft_active.svg';
 
 import styles from './styles.module.scss';
 
-const CollectionCreate = () => {
+const CollectionReview = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { account } = useWeb3React();
@@ -52,8 +52,10 @@ const CollectionCreate = () => {
       if (account === ADMIN_ADDRESS) {
         fetchCollections();
       } else {
-        history.replace('/');
+        history.replace('/404');
       }
+    } else {
+      history.replace('/404');
     }
   }, [account, authToken]);
 
@@ -320,4 +322,4 @@ const CollectionCreate = () => {
   );
 };
 
-export default CollectionCreate;
+export default CollectionReview;
